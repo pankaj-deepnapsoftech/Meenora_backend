@@ -45,16 +45,7 @@ export const createProduct = async (req, res) => {
 //   Get all products
 export const getProducts = async (req, res) => {
   try {
-    const { page, limit } = req.query;
-    const currentPage = parseInt(page) || 1;
-    const pageSize = parseInt(limit) || 10;
-    const skip = (currentPage - 1) * pageSize;
-
-    const products = await Product.find()
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(pageSize);
-
+    const products = await Product.find().sort({ dateAdded: -1 });
     res.json(products);
   } catch (error) {
     console.error(error);
@@ -106,15 +97,6 @@ export const updateProduct = async (req, res) => {
       product.howToUse = howToUse || product.howToUse;
       product.concern = concern || product.concern;
       product.tags = tags || product.tags;
-
-      if (req.file) {
-        const imagePath = `${
-          config.NODE_ENV !== 'development'
-            ? config.IMAGE_URL
-            : config.LOCAL_IMAGE_URL
-        }/${req.file.filename}`;
-        product.image = imagePath;
-      }
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);
