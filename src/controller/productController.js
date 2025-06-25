@@ -1,6 +1,6 @@
 import Product from '../models/Product.js';
 import { config } from '../config/env.config.js';
-//   Create new product
+
 export const createProduct = async (req, res) => {
   try {
     const {
@@ -35,7 +35,11 @@ export const createProduct = async (req, res) => {
     });
 
     const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
+    res.status(201).json({
+      data: createdProduct,
+      message: "Product Created"
+    });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
@@ -133,7 +137,7 @@ export const deleteProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (product) {
-      await Product.deleteOne();
+      await Product.deleteOne({ _id: req.params.id });
       res.json({ message: 'Product Removed' });
     } else {
       res.status(404).json({ message: 'Product Not Found' });
