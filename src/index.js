@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import productRoutes from './routes/productRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/products', productRoutes);
+app.use('/api/contacts', contactRoutes);
 
 app.use('/file', express.static(path.join(__dirname, '../', 'public/temp')));
 
