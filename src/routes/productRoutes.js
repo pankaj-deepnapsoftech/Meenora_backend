@@ -15,7 +15,7 @@ router.route('/').get(getProducts).post(upload.single('image'), createProduct);
 router
   .route('/:id')
   .get(getProductById)
-  .put(updateProduct)
+  .put(upload.single('image'), updateProduct)
   .delete(deleteProduct);
 
 export default router;
