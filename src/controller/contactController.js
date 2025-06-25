@@ -1,5 +1,4 @@
 import Contact from '../models/Contact.js';
-
 // POST: Add new contact message
 export const createContact = async (req, res) => {
   try {
