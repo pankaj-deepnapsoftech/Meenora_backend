@@ -4,8 +4,7 @@ import cors from 'cors';
 import productRoutes from './routes/productRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
-
-
+import bannerRoutes from './routes/bannerRoutes.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { DashboardCardData } from './controller/DashboardController.js';
@@ -24,7 +23,7 @@ app.use(express.json());
 app.use('/api/products', productRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/blogs', blogRoutes);
-
+app.use('/api/banners', bannerRoutes);
 
 app.get('/api/dashboard', DashboardCardData);
 
