@@ -4,6 +4,8 @@ import cors from 'cors';
 import productRoutes from './routes/productRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
+
+
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { DashboardCardData } from './controller/DashboardController.js';
@@ -22,7 +24,9 @@ app.use(express.json());
 app.use('/api/products', productRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/blogs', blogRoutes);
-app.use('/api/dashboard', DashboardCardData);
+
+
+app.get('/api/dashboard', DashboardCardData);
 
 app.use('/file', express.static(path.join(__dirname, '../', 'public/temp')));
 
