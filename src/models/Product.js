@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   status: {
     type: String,
-    enum: ['inStock', 'featured', 'comingSoon'],
+    enum: ['inStock', 'featured', 'comingSoon', ''],
     default: 'inStock',
   },
   image: { type: String },

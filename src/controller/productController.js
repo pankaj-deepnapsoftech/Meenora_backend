@@ -14,11 +14,8 @@ export const createProduct = async (req, res) => {
       howToUse,
       concern,
       tags,
+      image,
     } = req.body;
-
-    const image = req.file
-      ? `${config.NODE_ENV !== 'development' ? config.IMAGE_URL : config.LOCAL_IMAGE_URL}/${req.file.filename}`
-      : null;
 
     const product = new Product({
       name,
@@ -94,6 +91,7 @@ export const updateProduct = async (req, res) => {
       howToUse,
       concern,
       tags,
+      image,
     } = req.body;
 
     const product = await Product.findById(req.params.id);
@@ -109,15 +107,15 @@ export const updateProduct = async (req, res) => {
       product.howToUse = howToUse || product.howToUse;
       product.concern = concern || product.concern;
       product.tags = tags || product.tags;
-
-      if (req.file) {
-        const imagePath = `${
-          config.NODE_ENV !== 'development'
-            ? config.IMAGE_URL
-            : config.LOCAL_IMAGE_URL
-        }/${req.file.filename}`;
-        product.image = imagePath;
-      }
+      product.image = image || product.image;
+      // if (req.file) {
+      //   const imagePath = `${
+      //     config.NODE_ENV !== 'development'
+      //       ? config.IMAGE_URL
+      //       : config.LOCAL_IMAGE_URL
+      //   }/${req.file.filename}`;
+      //   product.image = imagePath;
+      // }
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);

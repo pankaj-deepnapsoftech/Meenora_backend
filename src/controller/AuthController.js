@@ -10,20 +10,33 @@ const generateToken = (user) => {
 // Register
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-  const exists = await User.findOne({ email });
-  if (exists) return res.status(400).json({ message: 'User already exists' });
 
-  const user = await User.create({ name, email, password });
-  const token = generateToken(user);
-  res.status(201).json({
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    },
-    token,
-  });
+  try {
+    const exists = await User.findOne({ email });
+    if (exists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = await User.create({ name, email, password });
+
+    const token = generateToken(user);
+
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      token,
+    });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res
+      .status(500)
+      .json({ message: 'Something went wrong during registration' });
+  }
 };
 
 // Login
