@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
     enum: ['inStock', 'featured', 'comingSoon'],
     default: 'inStock',
   },
-  image: { type: String },
+  image: [{ type: String }],
   ingredients: [String],
   benefits: [String],
   howToUse: { type: String },

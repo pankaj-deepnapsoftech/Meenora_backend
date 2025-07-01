@@ -1,12 +1,13 @@
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
-import { config } from '../config/env.config.js'; // Add JWT_SECRET here
+import { config } from '../config/env.config.js';
 
 const generateToken = (user) => {
   return jwt.sign({ id: user._id, role: user.role }, config.JWT_SECRET, {
     expiresIn: '7d',
   });
 };
+
 // Register
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -64,5 +65,35 @@ export const getUserProfile = async (req, res) => {
     res
       .status(500)
       .json({ message: 'Failed to fetch profile', error: error.message });
+  }
+};
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const { name, email, role } = req.body;
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) return res.status(404).json({ message: 'user Not Found' });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
+
+    const updated = await user.save();
+    res.json(updated);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export const deleteUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'user not found' });
+    await user.deleteOne();
+    res.json({ message: 'user deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };

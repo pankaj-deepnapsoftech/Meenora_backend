@@ -6,6 +6,7 @@ import contactRoutes from './routes/contactRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import bannerRoutes from './routes/bannerRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { DashboardCardData } from './controller/DashboardController.js';
@@ -26,6 +27,7 @@ app.use('/api/contacts', contactRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.get('/api/dashboard', DashboardCardData);
 
